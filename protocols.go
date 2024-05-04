@@ -36,7 +36,9 @@ const (
 	P_SNI               = 449
 	P_NOISE             = 454
 	P_WS                = 477
+	P_WS_WITH_PATH      = 4770 // non-standard
 	P_WSS               = 478 // deprecated alias for /tls/ws
+	P_WSS_WITH_PATH     = 4780 // non-standard
 	P_PLAINTEXTV2       = 7367777
 	P_WEBRTC_DIRECT     = 280
 	P_WEBRTC            = 281
@@ -258,10 +260,26 @@ var (
 		Code:  P_WS,
 		VCode: CodeToVarint(P_WS),
 	}
+	protoWSX = Protocol{
+		Name:       "x-parity-ws",
+		Code:       P_WS_WITH_PATH,
+		VCode:      CodeToVarint(P_WS_WITH_PATH),
+		Size:       LengthPrefixedVarSize,
+		Path:       true,
+		Transcoder: TranscoderWsPath,
+	}
 	protoWSS = Protocol{
 		Name:  "wss",
 		Code:  P_WSS,
 		VCode: CodeToVarint(P_WSS),
+	}
+	protoWSSX = Protocol{
+		Name:       "x-parity-wss",
+		Code:       P_WSS_WITH_PATH,
+		VCode:      CodeToVarint(P_WSS_WITH_PATH),
+		Size:       LengthPrefixedVarSize,
+		Path:       true,
+		Transcoder: TranscoderWsPath,
 	}
 	protoWebRTCDirect = Protocol{
 		Name:  "webrtc-direct",
@@ -309,7 +327,9 @@ func init() {
 		protoSNI,
 		protoNOISE,
 		protoWS,
+		protoWSX,
 		protoWSS,
+		protoWSSX,
 		protoPlaintextV2,
 		protoWebRTCDirect,
 		protoWebRTC,

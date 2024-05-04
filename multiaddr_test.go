@@ -23,6 +23,8 @@ func newMultiaddr(t *testing.T, a string) Multiaddr {
 
 func TestConstructFails(t *testing.T) {
 	cases := []string{
+		"/dns/telemetry.io/tcp/80/x-parity-ws",
+		"/dns/telemetry.io/tcp/80/x-parity-ws/",
 		"/ip4",
 		"/ip4/::1",
 		"/ip4/fdpsofodsajfdoisa",
@@ -105,6 +107,9 @@ func TestEmptyMultiaddr(t *testing.T) {
 }
 
 var good = []string{
+	"/dns/telemetry.io/tcp/80/x-parity-ws/%2Fsubmit%2F",
+	"/dns/telemetry.io/tcp/443/tls/x-parity-ws/%2Fsubmit%2F",
+	"/dns/telemetry.io/tcp/443/x-parity-wss/%2Fsubmit%2F",
 	"/ip4/1.2.3.4",
 	"/ip4/0.0.0.0",
 	"/ip4/192.0.2.0/ipcidr/24",

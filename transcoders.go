@@ -409,6 +409,16 @@ func unixValidate(b []byte) error {
 	return nil
 }
 
+var TranscoderWsPath = NewTranscoderFromFunctions(unixStB, unixBtS, wsPathVal)
+
+func wsPathVal(b []byte) error {
+	if len(b) < 1 {
+		return fmt.Errorf("empty websocket path")
+	}
+	// TODO: validate leading percent encoded slash
+	return nil
+}
+
 var TranscoderDns = NewTranscoderFromFunctions(dnsStB, dnsBtS, dnsVal)
 
 func dnsVal(b []byte) error {
